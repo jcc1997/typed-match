@@ -1,0 +1,22 @@
+{
+  "name": "typed-match",
+  "version": "0.0.1",
+  "keywords": [
+    "typescript",
+    "pattern matching"
+  ],
+  "description": "typescript pattern matching",
+  "author": "jcc1997",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.js"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  }
+}
