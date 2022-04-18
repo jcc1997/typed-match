@@ -22,7 +22,7 @@ function test (x: Foo | Bar | undefined | boolean) {
         // 此处会提示补全所有匹配
         Foo: foo => foo.foo,
         Bar: bar => bar.bar,
-        undefined: () => undefined,
+        empty: () => undefined,
         boolean: v => !v
     });
     return result;
@@ -33,60 +33,12 @@ test({ __type: 'Foo', foo: 'hello' }); // hello
 也可以使用下面这种方式使用类的声明
 
 ```typescript
-class Foo extends TypeClass<'Foo'> {
-    __type: 'Foo' = 'Foo'
+class Foo extends TypeClass('Foo') {
     foo: string
     constructor ({ foo }: { foo: string }) {
         super();
         this.foo = foo;
     }
-}
-```
-
-对于值匹配，需要使用另外的函数
-
-```typescript
-const tests = Symbol('test');
-function test (x: 123 | typeof tests | undefined) {
-    const result = matchValue(x)({
-        [tests]: (v) => 'symbol',
-        123: (v) => '123',
-        DEFAULT: (v) => { throw new Error('unexpected value'); }
-    });
-}
-```
-
-需要明确参数可能的取值，以下形式会引起错误
-
-```typescript
-const tests = Symbol('test');
-function test (x: number | string | typeof tests | undefined) {
-    const result = matchValue(x)({
-        [tests]: (v) => 'symbol',
-        123: (v) => '123',
-        DEFAULT: (v) => 'other'
-    });
-}
-```
-
-但是目前支持
-
-```typescript
-const tests = Symbol('test');
-function test (x: number | typeof tests | undefined) {
-    const result = matchValue(x)({
-        [tests]: (v) => 'symbol',
-        123: (v) => '123',
-        DEFAULT: (v) => 'other'
-    });
-}
-// or
-function test (x: string | typeof tests | undefined) {
-    const result = matchValue(x)({
-        [tests]: (v) => 'symbol',
-        123: (v) => '123',
-        DEFAULT: (v) => 'other'
-    });
 }
 ```
 

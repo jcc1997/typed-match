@@ -105,7 +105,7 @@ class Foo extends TypeClass('Foo') {
 const inst = new Foo({ foo: 'foo' });
  */
 export function TypeClass<T extends string> (type: T) {
-    return class TypeClass implements Type {
+    return class implements Type<T> {
         __type = type;
     };
 }
